@@ -85,13 +85,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div
-      className={`flex h-screen ${
+      className={`flex h-full ${
         isDarkMode ? "bg-[#484554]" : "bg-white"
       } transition-colors duration-300`}
     >
       <aside
         className={`transition-width duration-300 ${
-          isSidebarOpen ? "w-64" : "w-16"
+          isSidebarOpen ? "w-64 " : "w-16"
         } p-4 shadow-md ${
           isDarkMode ? "bg-[#6A6676] text-white" : "bg-white text-black"
         }`}
