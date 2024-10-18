@@ -48,7 +48,7 @@ const Slideshow = () => {
   }, [currentIndex]);
 
   return (
-    <div className="relative w-[510px]  mx-auto mt-2">
+    <div className="relative w-[335px] md:w-[510px]  mx-auto mt-2">
               <img
                 src={images[currentIndex].src}
                 alt={`Slide ${currentIndex + 1}`}

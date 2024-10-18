@@ -24,7 +24,7 @@ import {
 import { NumberTicker } from "./ui/Ticker";
 import { motion } from "framer-motion";
 import { eventNames } from "process";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineDown, AiOutlineRight } from "react-icons/ai";
 import EventStats from "./EventsStats";
 import BarChartComponent from "./BarChartComponents";
 import Slideshow from "./Slideshow";
@@ -105,18 +105,12 @@ const eventsData = [
     status: "In Progress",
   },
 ];
-
-
-
 const Home = () => {
-
-    
   const darkModeContext = useContext(DarkModeContext);
   if (!darkModeContext) {
     throw new Error("DarkModeContext must be used within a DarkModeProvider");
   }
   const { isDarkMode, toggleDarkMode } = darkModeContext;
-
 
   const [events, setEvents] = useState(eventsData);
   const [searchTerm, setSearchTerm] = useState("");
@@ -167,7 +161,6 @@ const Home = () => {
     setRowsPerPage(parseInt(event.target.value));
   };
 
-
   // Filtering and searching
   useEffect(() => {
     const filteredEvents = eventsData
@@ -192,30 +185,40 @@ const Home = () => {
     setShowModal(true);
   };
 
+  const [expandedEvent, setExpandedEvent] = useState<number | null>(null);
+
+  const toggleExpand = (eventId: number) => {
+    setExpandedEvent(expandedEvent === eventId ? null : eventId);
+  };
+
   return (
     <div className="px-5 py-6">
       <motion.p
         initial={{ filter: "blur(4px)", opacity: 0 }}
         animate={{ filter: "blur(0px)", opacity: 1 }}
         transition={{ delay: 0.5, duration: 0.5, ease: "easeInOut" }}
-        className="text-[22px] pb-[20px] w-[1076px] overflow-hidden"
+        className="text-[17px] font-[400] md:text-[22px] pb-[20px] w-[375px]  md:w-[1076px] overflow-hidden"
       >
         Welcome! here&apos;s your summary
       </motion.p>
-     <EventStats />
+      <EventStats />
       <div className="py-6">
-        <motion.p 
-         initial={{ filter: "blur(4px)", opacity: 0 }}
-         animate={{ filter: "blur(0px)", opacity: 1 }}
-         transition={{ delay: 0.5, duration: 0.5, ease: "easeInOut" }}
-        className="text-[18px] font-[500]">Event Registrations per month</motion.p>
+        <motion.p
+          initial={{ filter: "blur(4px)", opacity: 0 }}
+          animate={{ filter: "blur(0px)", opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5, ease: "easeInOut" }}
+          className="text-[18px] font-[500] "
+        >
+          Event Registrations per month
+        </motion.p>
         <motion.div
-         initial={{ filter: 'blur(10px)', opacity: 0 }}
-         animate={{ filter: 'blur(0px)', opacity: 1 }}
-         transition={{ delay: 0.7, duration: 0.7, ease: "easeInOut" }}
-        className="flex items-center gap-1 max-w-[1076px]">
-         <BarChartComponent />
-           <Slideshow />
+          initial={{ filter: "blur(10px)", opacity: 0 }}
+          animate={{ filter: "blur(0px)", opacity: 1 }}
+          transition={{ delay: 0.7, duration: 0.7, ease: "easeInOut" }}
+          className="flex flex-col md:flex-row items-center gap-1 -ml-4 max-w-[375px] md:max-w-[1076px]"
+        >
+          <BarChartComponent />
+          <Slideshow />
         </motion.div>
       </div>
       <div>
@@ -223,7 +226,7 @@ const Home = () => {
         <div>
           <div className="p-4 space-y-6">
             {/* Search and Filter Bar */}
-            <div className="flex gap-3 items-center">
+            <div className="flex flex-col md:flex-row gap-3 md:items-center">
               {/* Search */}
               <div className="relative ">
                 <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
@@ -232,40 +235,46 @@ const Home = () => {
                   placeholder="Search"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className={`pl-10 p-2 border text-sm rounded w-[200px] ${
+                  className={`pl-10 p-2 border text-sm rounded w-[335px] md:w-[200px] ${
                     isDarkMode ? "bg-[#484554]" : ""
                   }`}
                 />
               </div>
-              <div className="flex border p-2 gap-2 rounded items-center">
+              <div className="flex border p-2 gap-2 w-[335px] justify-center md:justify-start md:w-[100px] rounded items-center">
                 <p className="text-sm">Date</p>
                 <RiArrowDownSLine />
               </div>
-              <div className="flex border p-2 gap-2 rounded items-center">
+              <div className="flex border p-2 gap-2 justify-center md:justify-start w-[335px] md:w-[100px] rounded items-center">
                 <p className="text-sm">Status</p>
                 <RiArrowDownSLine />
               </div>
-              <div className="flex border p-2 gap-2 rounded items-center">
+              <div className="flex border p-2 gap-2 justify-center md:justify-start w-[335px] md:w-[100px] rounded items-center">
                 <p className="text-sm">Name</p>
                 <RiArrowDownSLine />
               </div>
-              <p className="font-[600] text-sm">Displaying 100 results</p>
+              <p className="font-[600] py-1 md:py-0 text-sm">
+                Displaying 100 results
+              </p>
               {/* Sort */}
-              <div className="flex items-center gap-4 pl-24">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm">Sort: </p>
-                  <select
-                    value={sortOrder}
-                    onChange={(e) => setSortOrder(e.target.value)}
-                    className={`border p-2 rounded text-sm ${
-                      isDarkMode ? "bg-[#484554]" : ""
-                    }`}
-                  >
-                    <option value="recent">Most Recent</option>
-                    <option value="oldest">Oldest First</option>
-                  </select>
+              <div className="flex items-center gap-4 pl-0 md:pl-24">
+                <div className="flex justify-between w-[335px] md:w-auto items-center gap-2">
+                  <p className="text-sm ">Sort: </p>
+                  <div>
+                    <select
+                      value={sortOrder}
+                      onChange={(e) => setSortOrder(e.target.value)}
+                      className={`border p-2 rounded text-sm ${
+                        isDarkMode ? "bg-[#484554]" : ""
+                      }`}
+                    >
+                      <option value="recent">Most Recent</option>
+                      <option value="oldest">Oldest First</option>
+                    </select>
+                  </div>
                 </div>
-                <div className="border p-3 rounded">
+              </div>
+              <div className="flex justify-between w-[335px] md:w-auto">
+                <div className="border p-3 rounded mr-2">
                   <SlOptionsVertical />
                 </div>
                 {/* Three Dots Menu */}
@@ -277,7 +286,7 @@ const Home = () => {
             </div>
 
             {/* Event Table */}
-            <table className="w-[1076px] border-collapse">
+            <table className="w-[335px] hidden md:table md:w-[1076px] border-collapse">
               <thead>
                 <tr
                   className={`text-left h-[48px] pb-4 ${
@@ -365,7 +374,97 @@ const Home = () => {
               </tbody>
             </table>
 
-            <div className="flex justify-between items-center mt-4 px-4 py-4 w-[1076px]">
+            {/* Mobile view - FAQ dropdown */}
+            <table className="w-[335px] border-collapse md:hidden">
+              <thead>
+                <tr
+                  className={`text-left h-[48px] ${
+                    isDarkMode ? "bg-[#6A6676]" : "bg-[#F1F5F9]"
+                  }`}
+                >
+                  <th></th> {/* Empty column for the arrow */}
+                  <th
+                    className={`p-2 text-xs font-[600] ${
+                      isDarkMode ? "text-white" : "text-[#64748B]"
+                    }`}
+                  >
+                    Event Name
+                  </th>
+                  <th
+                    className={`p-2 text-xs font-[600] ${
+                      isDarkMode ? "text-white" : "text-[#64748B]"
+                    }`}
+                  >
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {events.map((event) => (
+                  <React.Fragment key={event.id}>
+                    {/* Event name and status row */}
+                    <tr
+                      onClick={() => toggleExpand(event.id)}
+                      className={`cursor-pointer hover:bg-[#F2F2F7] ${
+                        expandedEvent === event.id ? "bg-[#F2F2F7]" : ""
+                      }`}
+                    >
+                      <td className="p-2 text-sm text-right">
+                        {/* Show right arrow if not expanded, down arrow if expanded */}
+                        {expandedEvent === event.id ? (
+                          <AiOutlineDown className="text-xs" />
+                        ) : (
+                          <AiOutlineRight className="text-xs" />
+                        )}
+                      </td>
+                      <td
+                        className={`p-2 text-sm font-[400] ${
+                          isDarkMode ? "text-white" : "text-[#334155]"
+                        }`}
+                      >
+                        {event.eventName}
+                      </td>
+                      <td
+                      onClick={() => handleEditEvent(event)}
+                      className={`text-sm p-1 cursor-pointer flex items-center font-[400] ${
+                        isDarkMode
+                          ? event.status === "Completed"
+                            ? "border bg-transparent px-1 w-[99px] rounded-xl mt-2 border-[#10B981]"
+                            : event.status === "In Progress"
+                            ? "border bg-transparent rounded-xl px-1 w-[99px] mt-2 border-[#3B82F6]"
+                            : ""
+                          : event.status === "Completed"
+                          ? "bg-[#D1FAE5] rounded-xl px-1 w-[99px] mt-2 text-[#10B981]"
+                          : event.status === "In Progress"
+                          ? "bg-[#DBEAFE] rounded-xl px-1 w-[99px] mt-2 text-[#3B82F6]"
+                          : ""
+                      }`}
+                    >
+                      <GoDotFill /> {event.status}
+                    </td>
+                    </tr>
+
+                    {/* Expanded details row */}
+                    {expandedEvent === event.id && (
+                      <tr className="bg-[#F5F5F5] mt-1 h-[52px]">
+                        <td
+                          colSpan={3}
+                          className={`p-2 text-sm font-[400] ${
+                            isDarkMode ? "text-white" : "text-[#334155]"
+                          }`}
+                        >
+                          <div className="flex justify-between px-3">
+                            <div>{event.speaker}</div>
+                            <div>{event.date}</div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                ))}
+              </tbody>
+            </table>
+            <div className="flex justify-between items-center mt-4 px-4 py-4 w-[335px] gap-2 md:w-[1076px]">
               {/* Pagination controls */}
               <div className="flex items-center space-x-2">
                 <button
@@ -418,16 +517,19 @@ const Home = () => {
             {/* Edit Event Modal */}
             {showModal && (
               <div className="fixed inset-0 flex top-0 items-center justify-center bg-black bg-opacity-50">
-                <div 
-                 ref={modalRef}
-                className={`bg-white p-8 rounded-lg w-[440px] h-[380px] ${isDarkMode ? 'bg-[#484554]' : ''}`}>
-                    <div className="flex items-center justify-between">
+                <div
+                  ref={modalRef}
+                  className={`bg-white p-8 rounded-lg w-[335px] md:w-[440px] h-[470px] md:h-[380px] ${
+                    isDarkMode ? "bg-[#484554]" : ""
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
                     <h2 className="text-lg font-[600] ">
-                    {selectedEvent?.eventName}
-                  </h2>
-                  <AiOutlineClose onClick={() => setShowModal(false)} />
-                    </div>
-                 
+                      {selectedEvent?.eventName}
+                    </h2>
+                    <AiOutlineClose onClick={() => setShowModal(false)} />
+                  </div>
+
                   <p className="text-[#64748B text-sm font-[400]">
                     {selectedEvent?.date}
                   </p>
@@ -460,10 +562,18 @@ const Home = () => {
                     </p>
                     <p className="text-sm font-[400]">300 Attendees</p>
                   </div>
-                  <div className={`bg-[#F8FAFC] ${isDarkMode ? 'bg-[#ADA9BB]' : '   '}`}>
-                    <button className="border bg-white py-2 px-4">Edit</button>
-                    <button className="bg-[#F43F5E] py-2 px-4 text-white ml-10 mr-2 ">Delete</button>
-                    <button className="bg-[#8576FF] py-2 px-4 text-white">Mark as Completed</button>
+                  <div
+                    className={`bg-[#F8FAFC] flex flex-col md:flex-row  mt-5${
+                      isDarkMode ? "bg-[#ADA9BB]" : "   "
+                    }`}
+                  >
+                    <button className="border  bg-white py-2 px-4">Edit</button>
+                    <button className="bg-[#F43F5E] w-[271px] md:w-auto py-2 px-4 text-white ml-0 md:ml-10 mt-2 md:mt-0 mr-2 ">
+                      Delete
+                    </button>
+                    <button className="bg-[#8576FF] py-2 px-4 mt-2 md:mt-0 text-white">
+                      Mark as Completed
+                    </button>
                   </div>
                 </div>
               </div>

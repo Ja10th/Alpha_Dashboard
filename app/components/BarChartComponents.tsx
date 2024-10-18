@@ -28,7 +28,7 @@ import {
     const { isDarkMode } = useContext(DarkModeContext);
   
     return (
-      <div className={`w-[554px] h-[320px] mt-2 py-10 px-6 ${isDarkMode ? "bg-[#6A6676] text-white" : "border"}`}>
+      <div className={` w-[331px]  h-[260px] md:w-[554px] md:h-[320px] mt-2 py-10 px-6 ${isDarkMode ? "bg-[#6A6676] text-white" : "border"}`}>
         <ResponsiveContainer>
           <BarChart data={eventRegistrationsData}>
             <XAxis

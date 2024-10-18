@@ -9,9 +9,9 @@ import {
   AiOutlineBell,
   AiOutlineMessage,
   AiOutlineSetting,
+  AiOutlineClose,
 } from "react-icons/ai";
 import { usePathname } from "next/navigation";
-import { FiToggleLeft } from "react-icons/fi";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { LiaToggleOffSolid, LiaToggleOnSolid } from "react-icons/lia";
 
@@ -41,21 +41,22 @@ const sidebarItems = [
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const pathname = usePathname();
   const [currentPath, setCurrentPath] = useState(pathname);
- 
+
   const darkModeContext = useContext(DarkModeContext);
   if (!darkModeContext) {
-    throw new Error('DarkModeContext must be used within a DarkModeProvider');
+    throw new Error("DarkModeContext must be used within a DarkModeProvider");
   }
 
   const { isDarkMode, toggleDarkMode } = darkModeContext;
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar closed initially for mobile
+
   const [activeItem, setActiveItem] = useState<string>("Home");
   const [notificationsCount] = useState(3);
-
 
   const handleItemClick = (item: string, route: string) => {
     setActiveItem(item);
     setCurrentPath(route);
+    setIsSidebarOpen(false); // Close sidebar on item click in mobile
   };
 
   const toggleSidebar = () => {
@@ -89,18 +90,30 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         isDarkMode ? "bg-[#484554]" : "bg-white"
       } transition-colors duration-300`}
     >
+      {/* Sidebar */}
       <aside
-        className={`transition-width duration-300 ${
-          isSidebarOpen ? "w-64 " : "w-16"
-        } p-4 shadow-md ${
+        className={`fixed md:static top-0 left-0 h-full z-50 transition-transform duration-300 ${
+          isSidebarOpen
+            ? "translate-x-0 w-full md:w-64"
+            : "-translate-x-full md:translate-x-0 w-16"
+        } md:block p-4 shadow-md ${
           isDarkMode ? "bg-[#6A6676] text-white" : "bg-white text-black"
         }`}
       >
+        {/* Close Button (Only for Mobile) */}
+        <div className="md:hidden flex justify-end relative">
+          {isSidebarOpen && (
+            <button onClick={toggleSidebar} className="text-2xl absolute top-1">
+              <AiOutlineClose />
+            </button>
+          )}
+        </div>
+
         <div className="flex gap-x-2 items-center pl-2 pb-4 py-2">
           <SiAircall className="text-[#8576FF] text-xl" />
           {isSidebarOpen && <p className="font-bold text-xl">Alpha</p>}
         </div>
-
+          <hr className="md:hidden"/>
         <div className="mt-4">
           {sidebarItems.map(({ name, icon, route }) => (
             <div
@@ -116,11 +129,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             >
               <div className="relative flex items-center">
                 {icon}
-                {isSidebarOpen && (
-                  <p className="ml-2">{name}</p>
-                )}
+                {isSidebarOpen && <p className="ml-2">{name}</p>}
                 {name === "Notifications" &&
-                  notificationsCount > 0 && !isSidebarOpen && (
+                  notificationsCount > 0 &&
+                  !isSidebarOpen && (
                     <sup className="absolute -right-4 -top-1 bg-red-500 text-white rounded-full w-3 h-3 p-2 flex items-center justify-center text-[14px]">
                       {notificationsCount}
                     </sup>
@@ -136,6 +148,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </div>
           ))}
 
+          {/* Toggle Button */}
           <div
             className={`flex items-center gap-x-2 p-2 text-[14px] rounded-md cursor-pointer ${
               isSidebarOpen ? "" : "bg-purple-500 text-white"
@@ -147,6 +160,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </div>
         </div>
 
+        {/* Dark Mode Toggle */}
         <div className="flex items-center gap-x-3 mt-4">
           <button
             onClick={toggleDarkMode}
@@ -156,7 +170,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <>
                 {isDarkMode ? (
                   <div className="flex items-center">
-                    <LiaToggleOnSolid className="mr-2 text-[#8576FF] bg-white bg-transparent text-lg" />
+                    <LiaToggleOnSolid className="mr-2 text-[#8576FF]  bg-transparent text-lg" />
                     <span className="text-[12px]">Light Mode</span>
                   </div>
                 ) : (
@@ -174,6 +188,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           </button>
         </div>
 
+        {/* User Profile */}
         <div className="flex items-center mt-4">
           {isSidebarOpen ? (
             <>
@@ -196,9 +211,22 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           )}
         </div>
       </aside>
+
+      {/* Main Content */}
       <main
         className={`flex-grow p-4 ${isDarkMode ? "text-white" : "text-black"}`}
       >
+        {/* Hamburger Icon for Mobile */}
+        <div className="flex md:hidden w-[375px] items-center justify-between px-2">
+          <div className="flex gap-x-2 items-center pl-2 pb-4 py-2">
+            <SiAircall className="text-[#8576FF] text-xl" />
+            <p>Alpha</p>
+          </div>
+          <div onClick={toggleSidebar} className="pr-2">
+            <img src="Vector.png" alt="hamburger" />
+          </div>
+        </div>
+
         {renderContent()}
       </main>
     </div>

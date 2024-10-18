@@ -20,14 +20,14 @@ const EventStats = () => {
   const { isDarkMode } = useContext(DarkModeContext);
 
   return (
-    <div className="flex gap-4">
+    <div className="flex flex-col md:flex-row gap-4">
       {statsData.map(({ id, name, value, trend, isUp }) => (
         <motion.div
           key={id}
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5, ease: "easeInOut" }}
-          className={`w-[260px] h-[88px] hover:scale-110 transition ease-in-out border p-4 rounded-sm ${
+          className={`w-[335px] md:w-[260px] h-[88px] hover:scale-110 transition ease-in-out border p-4 rounded-sm ${
             isDarkMode ? "bg-[#6A6676] border-none" : ""
           }`}
         >
