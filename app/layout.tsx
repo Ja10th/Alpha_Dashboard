@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className='font antialiased'
+        className='font antialiased scroll-smooth scroll-m-0'
       >
         <DarkModeProvider>
         {children}

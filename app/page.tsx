@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { SiAircall } from "react-icons/si";
 import {
   AiOutlineHome,
@@ -11,7 +11,7 @@ import {
   AiOutlineSetting,
   AiOutlineClose,
 } from "react-icons/ai";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { MdKeyboardDoubleArrowLeft } from "react-icons/md";
 import { LiaToggleOffSolid, LiaToggleOnSolid } from "react-icons/lia";
 
@@ -39,6 +39,7 @@ const sidebarItems = [
 ];
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const router = useRouter();
   const pathname = usePathname();
   const [currentPath, setCurrentPath] = useState(pathname);
 
@@ -48,7 +49,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
 
   const { isDarkMode, toggleDarkMode } = darkModeContext;
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // Sidebar closed initially for mobile
+
+  // Set default state based on screen size
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => window.innerWidth >= 768); // Open by default for large screens
 
   const [activeItem, setActiveItem] = useState<string>("Home");
   const [notificationsCount] = useState(3);
@@ -84,20 +87,38 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     }
   };
 
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsSidebarOpen(true); // Open sidebar for large screens
+      } else {
+        setIsSidebarOpen(false); // Close sidebar for small screens
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Set initial state based on current window size
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <div
       className={`flex h-full ${
-        isDarkMode ? "bg-[#484554]" : "bg-white"
+        isDarkMode ? "bg-[#383544]" : "bg-white"
       } transition-colors duration-300`}
     >
       {/* Sidebar */}
       <aside
-        className={`fixed md:static top-0 left-0 h-full z-50 transition-transform duration-300 ${
+        className={`fixed md:static top-0 border-r left-0 h-[1024px] z-50 transition-transform duration-300 ${
           isSidebarOpen
             ? "translate-x-0 w-full md:w-64"
             : "-translate-x-full md:translate-x-0 w-16"
-        } md:block p-4 shadow-md ${
-          isDarkMode ? "bg-[#6A6676] text-white" : "bg-white text-black"
+        } md:block p-4  ${
+          isDarkMode ? "bg-[#484554] border-r-0 text-white" : "bg-white text-black"
         }`}
       >
         {/* Close Button (Only for Mobile) */}
@@ -109,11 +130,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           )}
         </div>
 
-        <div className="flex gap-x-2 items-center pl-2 pb-4 py-2">
-          <SiAircall className="text-[#8576FF] text-xl" />
-          {isSidebarOpen && <p className="font-bold text-xl">Alpha</p>}
+        <div
+          className={`flex gap-x-2 items-center bg-[#93C5FD] border border-dashed border-[#2563EB] justify-center  ${
+            isSidebarOpen ? "w-16 h-8" : "w-8 h-8"
+          }`}
+        >
+          {isSidebarOpen && (
+            <p className="font-[600] text-xs text-[#2563EB] leading-4">
+              Full Logo
+            </p>
+          )}
         </div>
-          <hr className="md:hidden"/>
+        <hr className="md:hidden" />
         <div className="mt-4">
           {sidebarItems.map(({ name, icon, route }) => (
             <div
@@ -181,9 +209,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 )}
               </>
             ) : isDarkMode ? (
-              <LiaToggleOffSolid />
-            ) : (
               <LiaToggleOnSolid />
+            ) : (
+              <LiaToggleOffSolid />
             )}
           </button>
         </div>
@@ -193,9 +221,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           {isSidebarOpen ? (
             <>
               <img
-                src="https://unsplash.it/40/40?random"
+                src="Icon.png"
                 alt="User"
-                className="rounded-full h-10 w-10"
+                className="rounded-full h-8 w-8"
               />
               <div className="ml-2">
                 <p className="text-xs">Rudra Devi</p>
@@ -204,9 +232,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </>
           ) : (
             <img
-              src="https://unsplash.it/40/40?random"
+              src="Icon.png"
               alt="User"
-              className="rounded-full h-10 w-10"
+              className="rounded-full h-8 w-8"
             />
           )}
         </div>
@@ -214,20 +242,151 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
       {/* Main Content */}
       <main
-        className={`flex-grow p-4 ${isDarkMode ? "text-white" : "text-black"}`}
+        className={`flex-grow  ${isDarkMode ? "text-white" : "text-black"}`}
       >
         {/* Hamburger Icon for Mobile */}
-        <div className="flex md:hidden w-[375px] items-center justify-between px-2">
-          <div className="flex gap-x-2 items-center pl-2 pb-4 py-2">
-            <SiAircall className="text-[#8576FF] text-xl" />
-            <p>Alpha</p>
+        <div className={`fixed top-0 left-o w-full z-30 md:hidden py-8 ${isDarkMode ? 'bg-[#484554]' : 'bg-white border-b'}`}>
+        <div className="w-[343px] mx-auto  items-center justify-between  flex">
+          <div className="flex gap-x-2 items-center bg-[#93C5FD] border border-dashed border-[#2563EB] justify-center w-16 h-8">
+            <p className="font-[600] text-xs text-[#2563EB] leading-4">
+              Full Logo{" "}
+            </p>
           </div>
           <div onClick={toggleSidebar} className="pr-2">
             <img src="Vector.png" alt="hamburger" />
           </div>
         </div>
+        </div>
+        
 
         {renderContent()}
+
+        {/* Fixed Bottom Navbar for Mobile */}
+        <div className="md:hidden fixed bottom-0 left-0 w-full mx-auto bg-white shadow-md border-t border-gray-300">
+          <div className="flex justify-between items-center py-2 px-4">
+            {/* Home Icon */}
+            <div
+              className="flex flex-col items-center w-1/5"
+              onClick={() => router.push("/")}
+            >
+              <AiOutlineHome
+                className={`text-2xl ${
+                  currentPath === "/" ? "text-[#8576FF]" : "text-gray-500"
+                }`}
+              />
+              <p
+                className={`text-xs ${
+                  currentPath === "/" ? "text-[#8576FF]" : "text-gray-500"
+                }`}
+              >
+                Home
+              </p>
+              {currentPath === "/" && (
+                <div className="w-full h-1 bg-[#8576FF] mt-1"></div>
+              )}
+            </div>
+
+            {/* Events Icon */}
+            <div
+              className="flex flex-col items-center w-1/5"
+              onClick={() => router.push("/events")}
+            >
+              <AiOutlineCalendar
+                className={`text-2xl ${
+                  currentPath === "/events" ? "text-[#8576FF]" : "text-gray-500"
+                }`}
+              />
+              <p
+                className={`text-xs ${
+                  currentPath === "/events" ? "text-[#8576FF]" : "text-gray-500"
+                }`}
+              >
+                Events
+              </p>
+              {currentPath === "/events" && (
+                <div className="w-full h-1 bg-[#8576FF] mt-1"></div>
+              )}
+            </div>
+
+            {/* Speakers Icon */}
+            <div
+              className="flex flex-col items-center w-1/5"
+              onClick={() => router.push("/speakers")}
+            >
+              <AiOutlineUser
+                className={`text-2xl ${
+                  currentPath === "/speakers"
+                    ? "text-[#8576FF]"
+                    : "text-gray-500"
+                }`}
+              />
+              <p
+                className={`text-xs ${
+                  currentPath === "/speakers"
+                    ? "text-[#8576FF]"
+                    : "text-gray-500"
+                }`}
+              >
+                Speakers
+              </p>
+              {currentPath === "/speakers" && (
+                <div className="w-full h-1 bg-[#8576FF] mt-1"></div>
+              )}
+            </div>
+
+            {/* Reports Icon */}
+            <div
+              className="flex flex-col items-center w-1/5"
+              onClick={() => router.push("/reports")}
+            >
+              <AiOutlineFileText
+                className={`text-2xl ${
+                  currentPath === "/reports"
+                    ? "text-[#8576FF]"
+                    : "text-gray-500"
+                }`}
+              />
+              <p
+                className={`text-xs ${
+                  currentPath === "/reports"
+                    ? "text-[#8576FF]"
+                    : "text-gray-500"
+                }`}
+              >
+                Reports
+              </p>
+              {currentPath === "/reports" && (
+                <div className="w-full h-1 bg-[#8576FF] mt-1"></div>
+              )}
+            </div>
+
+            {/* Profile Icon */}
+            <div
+              className="flex flex-col items-center w-1/5"
+              onClick={() => router.push("/settings")}
+            >
+              <AiOutlineUser
+                className={`text-2xl ${
+                  currentPath === "/settings"
+                    ? "text-[#8576FF]"
+                    : "text-gray-500"
+                }`}
+              />
+              <p
+                className={`text-xs ${
+                  currentPath === "/settings"
+                    ? "text-[#8576FF]"
+                    : "text-gray-500"
+                }`}
+              >
+                Profile
+              </p>
+              {currentPath === "/settings" && (
+                <div className="w-full h-1 bg-[#8576FF] mt-1"></div>
+              )}
+            </div>
+          </div>
+        </div>
       </main>
     </div>
   );

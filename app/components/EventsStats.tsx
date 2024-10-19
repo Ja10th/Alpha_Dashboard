@@ -13,42 +13,58 @@ const statsData = [
 ];
 
 const EventStats = () => {
-    const darkModeContext = useContext(DarkModeContext);
-    if (!darkModeContext) {
-      throw new Error("DarkModeContext must be used within a DarkModeProvider");
-    }
-  const { isDarkMode } = useContext(DarkModeContext);
+  const darkModeContext = useContext(DarkModeContext);
+  if (!darkModeContext) {
+    throw new Error("DarkModeContext must be used within a DarkModeProvider");
+  }
+  const { isDarkMode, toggleDarkMode } = darkModeContext;
 
   return (
-    <div className="flex flex-col md:flex-row gap-4">
-      {statsData.map(({ id, name, value, trend, isUp }) => (
-        <motion.div
-          key={id}
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5, ease: "easeInOut" }}
-          className={`w-[335px] md:w-[260px] h-[88px] hover:scale-110 transition ease-in-out border p-4 rounded-sm ${
-            isDarkMode ? "bg-[#6A6676] border-none" : ""
-          }`}
-        >
-          <div className="flex items-center gap-1">
-            <p className={isDarkMode ? "text-white" : "text-[#64748B]"}>{name}</p>
-            <span className={isDarkMode ? "text-white" : "text-[#64748B]"}>
-              <IoIosInformationCircleOutline />
-            </span>
-          </div>
-          <div className="flex items-center gap-1">
-            <p className="text-[20px] font-[600]">
-              {name === "Total Revenue" && <span className="mr-1">$</span>}
-              <NumberTicker value={value} />
-            </p>
-            <p className={`text-xs ${isUp ? "text-[#10B981]" : "text-[#F43F5E]"}`}>
-              {isUp ? <GoArrowUpRight /> : <GoArrowDownRight />}
-            </p>
-            <p className={`text-xs ${isUp ? "text-[#10B981]" : "text-[#F43F5E]"}`}>{trend}</p>
-          </div>
-        </motion.div>
-      ))}
+    <div className="flex w-full ">
+      <div className="w-[375px] md:pl-20 md:w-[1170px]">
+        <div className=" flex flex-col md:flex-row gap-4">
+          {statsData.map(({ id, name, value, trend, isUp }) => (
+            <motion.div
+              key={id}
+              initial={{ y: 100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.8, ease: "easeInOut" }}
+              className={`w-[335px]  lg:w-[300px]  lg:max-w-[500px] h-[88px] hover:scale-125 cursor-pointer transition ease-in-out border p-4 rounded-sm ${
+                isDarkMode ? "bg-[#484554] border-none" : ""
+              }`}
+            >
+              <div className="flex items-center gap-1">
+                <p className={isDarkMode ? "text-white" : "text-[#64748B]"}>
+                  {name}
+                </p>
+                <span className={isDarkMode ? "text-white" : "text-[#64748B]"}>
+                  <IoIosInformationCircleOutline />
+                </span>
+              </div>
+              <div className="flex items-center gap-1">
+                <p className="text-[20px] font-[600]">
+                  {name === "Total Revenue" && <span className="mr-1">$</span>}
+                  <NumberTicker value={value} />
+                </p>
+                <p
+                  className={`text-xs ${
+                    isUp ? "text-[#10B981]" : "text-[#F43F5E]"
+                  }`}
+                >
+                  {isUp ? <GoArrowUpRight /> : <GoArrowDownRight />}
+                </p>
+                <p
+                  className={`text-xs ${
+                    isUp ? "text-[#10B981]" : "text-[#F43F5E]"
+                  }`}
+                >
+                  {trend}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
