@@ -1,6 +1,5 @@
 "use client";
 import React, { useContext, useState, useEffect } from "react";
-import { SiAircall } from "react-icons/si";
 import {
   AiOutlineHome,
   AiOutlineCalendar,
@@ -38,7 +37,7 @@ const sidebarItems = [
   { name: "Settings", icon: <AiOutlineSetting />, route: "/settings" },
 ];
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutProps> = ( ) => {
   const router = useRouter();
   const pathname = usePathname();
   const [currentPath, setCurrentPath] = useState(pathname);

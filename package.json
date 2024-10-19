@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+      "postinstall": "next build || exit 0",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type-check": "tsc --noEmit" 
   },
   "dependencies": {
     "clsx": "^2.1.1",

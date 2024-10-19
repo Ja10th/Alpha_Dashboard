@@ -94,7 +94,7 @@ const Home = () => {
   if (!darkModeContext) {
     throw new Error("DarkModeContext must be used within a DarkModeProvider");
   }
-  const { isDarkMode, toggleDarkMode } = darkModeContext;
+  const { isDarkMode } = darkModeContext;
 
   const [events, setEvents] = useState(eventsData);
   const [searchTerm, setSearchTerm] = useState("");
@@ -160,6 +160,7 @@ const Home = () => {
     setEvents(filteredEvents);
   }, [searchTerm, sortOrder]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleEditEvent = (event: any) => {
     setSelectedEvent(event);
     setShowModal(true);

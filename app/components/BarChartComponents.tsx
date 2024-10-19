@@ -31,7 +31,7 @@ const BarChartComponent = () => {
 if (!darkModeContext) {
   throw new Error("DarkModeContext must be used within a DarkModeProvider");
 }
-const { isDarkMode, toggleDarkMode } = darkModeContext;
+const { isDarkMode } = darkModeContext;
 
   return (
     <div className="w-full">
