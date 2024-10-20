@@ -180,13 +180,13 @@ const Home = () => {
   };
 
   return (
-    <div className="max-w-[375px] md:max-w-[1276px] mx-auto py-6">
-      <div className="px-10 border-none">
+    <div className="flex flex-col px-10">
+      <div className="border-none pt-32 md:pt-4">
         <motion.p
           initial={{ filter: "blur(4px)", opacity: 0 }}
           animate={{ filter: "blur(0px)", opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5, ease: "easeInOut" }}
-          className="text-[17px] font-[400] md:text-[22px] pb-[20px]  max-w-[335px] border-none pt-24 md:pt-5 md:max-w-[1076px]"
+          className="text-[17px] font-[400] md:text-[22px] pb-[20px] "
         >
           Welcome! here&apos;s your summary
         </motion.p>
@@ -199,7 +199,7 @@ const Home = () => {
             initial={{ filter: "blur(4px)", opacity: 0 }}
             animate={{ filter: "blur(0px)", opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.5, ease: "easeInOut" }}
-            className="text-[18px] font-[500] w-[335px] pl-10 py-2 border-none "
+            className="text-[18px] font-[500] w-[335px] py-2 border-none "
           >
             Event Registrations per month
           </motion.p>
@@ -210,7 +210,7 @@ const Home = () => {
             initial={{ filter: "blur(10px)", opacity: 0 }}
             animate={{ filter: "blur(0px)", opacity: 1 }}
             transition={{ delay: 1, duration: 1, ease: "easeInOut" }}
-            className="flex mt-4 flex-col md:flex-row items-center gap-1 border-none px-10 md:px-0 max-w-[375px] mx-auto md:ml-10 md:max-w-[1276px]"
+            className="flex mt-4 flex-col md:flex-row items-center gap-1 border-none "
           >
             <BarChartComponent />
             <Slideshow />
@@ -222,10 +222,10 @@ const Home = () => {
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 1.2, duration: 1.2, ease: "easeInOut" }}
-          className="w-[400px] ml-5 md:w-[1170px]"
+          className=""
         >
           <div className="w-full ">
-            <h2 className="text-[18px] w-[335px] pl-4 md:w-[1076px]  font-[500]">
+            <h2 className="text-[18px]  font-[500]">
               Events History
             </h2>
           </div>
@@ -270,11 +270,11 @@ const Home = () => {
                   <p className="text-sm">Name</p>
                   <RiArrowDownSLine />
                 </div>
-                <p className="font-[600] py-1 md:py-0 text-sm w-[500px]">
+                <p className="font-[600] py-1 md:py-0 text-sm pr-32">
                   Displaying 100 results
                 </p>
                 {/* Sort */}
-                <div className="flex items-center gap-4 pl-0 md:pl-24">
+                <div className="flex items-center gap-4 ">
                   <div className="flex justify-between w-[400px] md:w-auto items-center gap-2">
                     <p className="text-sm ">Sort: </p>
                     <div>

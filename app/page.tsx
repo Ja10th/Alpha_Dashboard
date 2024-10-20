@@ -22,6 +22,7 @@ import Notifications from "./notifications/page";
 import Messaging from "./messaging/page";
 import Settings from "./settings/page";
 import { DarkModeContext } from "./context/DarkModeProvider";
+import { CiMenuFries } from "react-icons/ci";
 
 
 const sidebarItems = [
@@ -104,16 +105,18 @@ const Layout= () => {
 
   return (
     <div
-      className={`flex h-full ${
+      className={` flex  ${
         isDarkMode ? "bg-[#383544]" : "bg-white"
-      } transition-colors duration-300`}
+      } `}
     >
       {/* Sidebar */}
-      <aside
-        className={`fixed md:static top-0 border-r left-0 h-[1024px] z-50 transition-transform duration-300 ${
+      
+
+<aside
+        className={`fixed md:static top-0 border-r px-10   py-10 md:py-3 md:px-3 left-0 h-[1024px] z-50 transition-transform duration-300 ${
           isSidebarOpen
             ? "translate-x-0 w-full md:w-64"
-            : "-translate-x-full md:translate-x-0 w-16"
+            : "-translate-x-full md:translate-x-0 md:w-16"
         } md:block p-4  ${
           isDarkMode ? "bg-[#484554] border-r-0 text-white" : "bg-white text-black"
         }`}
@@ -121,8 +124,8 @@ const Layout= () => {
         {/* Close Button (Only for Mobile) */}
         <div className="md:hidden flex justify-end relative">
           {isSidebarOpen && (
-            <button onClick={toggleSidebar} className="text-2xl absolute top-1">
-              <AiOutlineClose />
+            <button onClick={toggleSidebar} className="text-3xl absolute top-1">
+              <AiOutlineClose className="text-4xl"/>
             </button>
           )}
         </div>
@@ -237,10 +240,9 @@ const Layout= () => {
           )}
         </div>
       </aside>
-
       {/* Main Content */}
       <main
-        className={`flex-grow border-none ${isDarkMode ? "text-white" : "text-black"}`}
+        className={`${isDarkMode ? "text-white bg-[#383544]" : "bg-white text-black"}`}
       >
         {/* Hamburger Icon for Mobile */}
         <div className={`fixed top-0 left-o w-full z-30 md:hidden py-8 ${isDarkMode ? 'bg-[#484554]' : 'bg-white border-b'}`}>
@@ -251,16 +253,18 @@ const Layout= () => {
             </p>
           </div>
           <div onClick={toggleSidebar} className="pr-2">
-            <img src="Vector.png" alt="hamburger" />
+          <CiMenuFries className="text-3xl"/>
           </div>
         </div>
         </div>
         
-
+        <div className="">
         {renderContent()}
+        </div>
+
 
         {/* Fixed Bottom Navbar for Mobile */}
-        <div className="md:hidden fixed bottom-0 left-0 w-full mx-auto bg-white shadow-md border-t border-gray-300">
+          <div className={`md:hidden fixed bottom-0 left-0 w-full mx-auto  ${isDarkMode ? 'bg-[#383544]' : 'bg-white'}`}>
           <div className="flex justify-between items-center py-2 px-4">
             {/* Home Icon */}
             <div

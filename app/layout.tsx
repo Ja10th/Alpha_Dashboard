@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   description: "Project for frontend role",
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
