@@ -23,9 +23,6 @@ import Messaging from "./messaging/page";
 import Settings from "./settings/page";
 import { DarkModeContext } from "./context/DarkModeProvider";
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
 
 const sidebarItems = [
   { name: "Home", icon: <AiOutlineHome />, route: "/" },
@@ -37,7 +34,7 @@ const sidebarItems = [
   { name: "Settings", icon: <AiOutlineSetting />, route: "/settings" },
 ];
 
-const Layout: React.FC<LayoutProps> = ( ) => {
+const Layout= () => {
   const router = useRouter();
   const pathname = usePathname();
   const [currentPath, setCurrentPath] = useState(pathname);
@@ -50,7 +47,25 @@ const Layout: React.FC<LayoutProps> = ( ) => {
   const { isDarkMode, toggleDarkMode } = darkModeContext;
 
   // Set default state based on screen size
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => window.innerWidth >= 768); // Open by default for large screens
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    // This will run only in the browser after the component mounts
+    const handleResize = () => {
+      setIsSidebarOpen(window.innerWidth >= 768);
+    };
+
+    // Set initial value based on window size
+    handleResize();
+
+    // Add event listener to update on window resize
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []); // Open by default for large screens
 
   const [activeItem, setActiveItem] = useState<string>("Home");
   const [notificationsCount] = useState(3);

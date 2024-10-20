@@ -16,6 +16,13 @@ import EventStats from "./EventsStats";
 import BarChartComponent from "./BarChartComponents";
 import Slideshow from "./Slideshow";
 
+type EventType = {
+  id: number;
+  eventName: string;
+  date: string;
+  speaker: string;
+  status: string;
+};
 
 const eventsData = [
   {
@@ -99,7 +106,7 @@ const Home = () => {
   const [events, setEvents] = useState(eventsData);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState("recent");
-  const [selectedEvent, setSelectedEvent] = useState<any>(null);
+  const [selectedEvent, setSelectedEvent] = useState<EventType>(null);
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -161,7 +168,7 @@ const Home = () => {
   }, [searchTerm, sortOrder]);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handleEditEvent = (event: any) => {
+  const handleEditEvent = (event: EventType) => {
     setSelectedEvent(event);
     setShowModal(true);
   };
