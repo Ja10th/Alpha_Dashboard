@@ -180,13 +180,13 @@ const Home = () => {
   };
 
   return (
-    <div className="px-5 py-6 w-full">
-      <div className="w-full">
+    <div className="max-w-[375px] md:max-w-[1276px] mx-auto py-6">
+      <div className="px-10 border-none">
         <motion.p
           initial={{ filter: "blur(4px)", opacity: 0 }}
           animate={{ filter: "blur(0px)", opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.5, ease: "easeInOut" }}
-          className="text-[17px] font-[400] md:text-[22px] pb-[20px] w-[335px] pl-5 border-none pt-24 md:pt-0 md:pl-20 md:w-[1076px] overflow-hidden"
+          className="text-[17px] font-[400] md:text-[22px] pb-[20px]  max-w-[335px] border-none pt-24 md:pt-5 md:max-w-[1076px]"
         >
           Welcome! here&apos;s your summary
         </motion.p>
@@ -194,38 +194,38 @@ const Home = () => {
 
       <EventStats />
       <div className="py-6">
-        <div className="w-full  border-none">
+        <div className="flex justify-start ">
           <motion.p
             initial={{ filter: "blur(4px)", opacity: 0 }}
             animate={{ filter: "blur(0px)", opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.5, ease: "easeInOut" }}
-            className="text-[18px] font-[500] w-[335px] border-none pl-5 md:pl-20 "
+            className="text-[18px] font-[500] w-[335px] pl-10 py-2 border-none "
           >
             Event Registrations per month
           </motion.p>
         </div>
 
-        <div className="w-full">
+        <div className="flex w-full">
           <motion.div
             initial={{ filter: "blur(10px)", opacity: 0 }}
             animate={{ filter: "blur(0px)", opacity: 1 }}
             transition={{ delay: 1, duration: 1, ease: "easeInOut" }}
-            className="flex flex-col md:flex-row items-center gap-1 border-none w-[335px] pl-5 md:pl-20 md:w-[1076px]"
+            className="flex mt-4 flex-col md:flex-row items-center gap-1 border-none px-10 md:px-0 max-w-[375px] mx-auto md:ml-10 md:max-w-[1276px]"
           >
             <BarChartComponent />
             <Slideshow />
           </motion.div>
         </div>
       </div>
-      <div className="w-full">
+      <div className="w-full py-5">
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 1.2, duration: 1.2, ease: "easeInOut" }}
-          className="w-[375px] md:w-[1170px] pl-0 md:pl-16"
+          className="w-[400px] ml-5 md:w-[1170px]"
         >
-          <div className="w-full">
-            <h2 className="text-[18px] w-[335px] mx-auto md:w-[1076px] md:pl-4 font-[500]">
+          <div className="w-full ">
+            <h2 className="text-[18px] w-[335px] pl-4 md:w-[1076px]  font-[500]">
               Events History
             </h2>
           </div>
@@ -241,13 +241,13 @@ const Home = () => {
                     placeholder="Search"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className={`pl-10 p-2 border text-sm rounded w-[335px] md:w-[200px] ${
+                    className={`pl-10 p-2 border text-sm rounded w-[400px] md:w-[200px] ${
                       isDarkMode ? "bg-[#484554] border-none" : ""
                     }`}
                   />
                 </div>
                 <div
-                  className={`flex border p-2 gap-2 w-[335px] justify-center md:justify-start md:w-[100px] rounded items-center  ${
+                  className={`flex border p-2 gap-2 w-[400px] justify-center md:justify-start md:w-[100px] rounded items-center  ${
                     isDarkMode ? "bg-[#484554] border-none" : ""
                   }`}
                 >
@@ -255,7 +255,7 @@ const Home = () => {
                   <RiArrowDownSLine />
                 </div>
                 <div
-                  className={`flex border p-2 gap-2 justify-center md:justify-start w-[335px] md:w-[100px] rounded items-center  ${
+                  className={`flex border p-2 gap-2 justify-center md:justify-start w-[400px] md:w-[100px] rounded items-center  ${
                     isDarkMode ? "bg-[#484554] border-none" : ""
                   }`}
                 >
@@ -263,7 +263,7 @@ const Home = () => {
                   <RiArrowDownSLine />
                 </div>
                 <div
-                  className={`flex border p-2 gap-2 justify-center md:justify-start w-[335px] md:w-[100px] rounded items-center  ${
+                  className={`flex border p-2 gap-2 justify-center md:justify-start w-[400px] md:w-[100px] rounded items-center  ${
                     isDarkMode ? "bg-[#484554] border-none" : ""
                   }`}
                 >
@@ -275,7 +275,7 @@ const Home = () => {
                 </p>
                 {/* Sort */}
                 <div className="flex items-center gap-4 pl-0 md:pl-24">
-                  <div className="flex justify-between w-[335px] md:w-auto items-center gap-2">
+                  <div className="flex justify-between w-[400px] md:w-auto items-center gap-2">
                     <p className="text-sm ">Sort: </p>
                     <div>
                       <select
@@ -291,7 +291,7 @@ const Home = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex justify-between w-[335px] md:w-auto">
+                <div className="flex justify-between w-[400px] md:w-auto">
                   <div
                     className={`border p-3 rounded mr-2 ${
                       isDarkMode ? "bg-[#484554] border-none" : ""
@@ -312,7 +312,7 @@ const Home = () => {
               </div>
 
               {/* Event Table */}
-              <table className="w-[335px] hidden md:table md:w-[1076px] border-collapse">
+              <table className="w-[400px] hidden md:table md:w-[1076px] border-collapse">
                 <thead>
                   <tr
                     className={`text-left h-[48px] pb-4 ${
@@ -401,7 +401,7 @@ const Home = () => {
               </table>
 
               {/* Mobile view - FAQ dropdown */}
-              <table className="w-[335px] border-collapse md:hidden">
+              <table className="w-[400px] border-collapse md:hidden">
                 <thead>
                   <tr
                     className={`text-left h-[48px] ${
@@ -548,7 +548,7 @@ const Home = () => {
                 </div>
 
                 {/* Rows per page */}
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 ">
                   <span className="text-sm">Show:</span>
                   <select
                     value={rowsPerPage}

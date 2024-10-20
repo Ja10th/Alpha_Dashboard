@@ -7,7 +7,7 @@ const images = [
     text: "Turpis interdum nunc varius ornare dignissim pretium. Massa ornare quis aliquet sed vitae. Sed velit nisi, fermentum erat.",
   },
   {
-    src: "slide.png",
+    src: "Slide.png",
     name: "Latest News & Updates",
     text: "Turpis interdum nunc varius ornare dignissim pretium. Massa ornare quis aliquet sed vitae.",
   },
@@ -49,7 +49,7 @@ const Slideshow = () => {
 
   return (
     <div>
-      <div className="relative w-[335px] md:w-[510px] rounded-xl ml-5 mt-2">
+      <div className="relative w-[400px] ml-24 md:ml-5 md:w-[510px] rounded-xl  mt-2">
         <img
           src={images[currentIndex].src}
           alt={`Slide ${currentIndex + 1}`}

@@ -20,8 +20,8 @@ const EventStats = () => {
   const { isDarkMode } = darkModeContext;
 
   return (
-    <div className="flex w-full">
-      <div className="w-[375px] pl-5 md:pl-20 md:w-[1170px]">
+    <div className="flex justify-center">
+      <div className="px-10 max-w-[375px] mx-auto md:max-w-[1270px]">
         <div className="relative flex flex-col md:flex-row gap-4">
           {statsData.map(({ id, name, value, trend, isUp }) => (
             <motion.div
@@ -29,7 +29,7 @@ const EventStats = () => {
               initial={{ y: 100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.8, duration: 0.8, ease: "easeInOut" }}
-              className={`relative w-[335px] lg:w-[300px] lg:max-w-[500px] h-[88px] hover:scale-105 transform transition-transform ease-in-out duration-300 cursor-pointer border p-4 rounded-sm ${
+              className={`relative w-[400px] lg:w-[300px] lg:max-w-[500px] h-[88px] hover:scale-105 transform transition-transform ease-in-out duration-300 cursor-pointer border p-4 rounded-sm ${
                 isDarkMode ? "bg-[#484554] border-none" : "bg-white"
               }`}
               style={{ transformOrigin: "center" }} // Controls the scaling origin

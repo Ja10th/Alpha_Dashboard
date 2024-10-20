@@ -101,23 +101,6 @@ const Layout= () => {
     }
   };
 
-  // Handle window resize
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsSidebarOpen(true); // Open sidebar for large screens
-      } else {
-        setIsSidebarOpen(false); // Close sidebar for small screens
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize(); // Set initial state based on current window size
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <div
@@ -155,7 +138,8 @@ const Layout= () => {
             </p>
           )}
         </div>
-        <hr className="md:hidden" />
+        <hr className=
+        {`md:hidden ${isDarkMode ? 'border-gray-600 mt-2' : 'mt-2'}`}/>
         <div className="mt-4">
           {sidebarItems.map(({ name, icon, route }) => (
             <div
@@ -256,11 +240,11 @@ const Layout= () => {
 
       {/* Main Content */}
       <main
-        className={`flex-grow  ${isDarkMode ? "text-white" : "text-black"}`}
+        className={`flex-grow border-none ${isDarkMode ? "text-white" : "text-black"}`}
       >
         {/* Hamburger Icon for Mobile */}
         <div className={`fixed top-0 left-o w-full z-30 md:hidden py-8 ${isDarkMode ? 'bg-[#484554]' : 'bg-white border-b'}`}>
-        <div className="w-[343px] mx-auto  items-center justify-between  flex">
+        <div className="w-[400px] mx-auto  items-center justify-between  flex">
           <div className="flex gap-x-2 items-center bg-[#93C5FD] border border-dashed border-[#2563EB] justify-center w-16 h-8">
             <p className="font-[600] text-xs text-[#2563EB] leading-4">
               Full Logo{" "}

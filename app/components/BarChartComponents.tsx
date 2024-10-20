@@ -36,7 +36,7 @@ const { isDarkMode } = darkModeContext;
   return (
     <div className="w-full">
       <div
-        className={` w-[335px] mx-auto h-[260px] md:w-[554px] md:h-[320px] mt-2 py-2 flex items-center justify-center md:px-6 ${
+        className={` w-[400px] px-3 mx-auto h-[260px] md:w-[610px] md:h-[320px] mt-2 py-6 md:py-4 flex items-center justify-center md:px-6 ${
           isDarkMode ? "bg-[#484554] text-white" : "border"
         }`}
       >
