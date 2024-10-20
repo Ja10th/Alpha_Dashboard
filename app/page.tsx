@@ -162,7 +162,7 @@ const Layout= () => {
                 {name === "Notifications" &&
                   notificationsCount > 0 &&
                   !isSidebarOpen && (
-                    <sup className="absolute -right-4 -top-1 bg-red-500 text-white rounded-full w-3 h-3 p-2 flex items-center justify-center text-[14px]">
+                    <sup className="absolute right-4 -top-1 bg-red-500 text-white rounded-full w-3 h-3 p-2 flex items-center justify-center text-[14px]">
                       {notificationsCount}
                     </sup>
                   )}
