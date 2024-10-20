@@ -312,7 +312,7 @@ const Home = () => {
               </div>
 
               {/* Event Table */}
-              <table className="w-[400px] hidden md:table md:w-[1076px] border-collapse">
+              <table className="w-[400px] hidden md:table md:w-[1136px] border-collapse">
                 <thead>
                   <tr
                     className={`text-left h-[48px] pb-4 ${

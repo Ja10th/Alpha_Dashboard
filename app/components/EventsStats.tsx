@@ -21,7 +21,7 @@ const EventStats = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="px-10 max-w-[375px] mx-auto md:max-w-[1270px]">
+      <div className="px-10 max-w-[375px] mx-auto md:px-0 md:max-w-[1206px]">
         <div className="relative flex flex-col md:flex-row gap-4">
           {statsData.map(({ id, name, value, trend, isUp }) => (
             <motion.div
